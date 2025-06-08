@@ -5,20 +5,12 @@
 [ext_resource type="Theme" uid="uid://5wwgiimot5nw" path="res://theme/theme.tres" id="3_jbsda"]
 [ext_resource type="Script" uid="uid://d0ainskgkimnh" path="res://ui/button.gd" id="4_0bcp5"]
 
-[node name="GameMenu" type="Control"]
+[node name="GameMenu" type="CanvasLayer"]
 process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("3_jbsda")
 script = ExtResource("1_2ot4n")
 
 [node name="Background" type="ColorRect" parent="."]
 material = ExtResource("2_2ot4n")
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,7 +18,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="StartScreen" type="CenterContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -78,7 +69,6 @@ script = ExtResource("4_0bcp5")
 
 [node name="PauseScreen" type="CenterContainer" parent="."]
 visible = false
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

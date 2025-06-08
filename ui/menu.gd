@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 @export var window_size: Vector2 = Vector2(1152, 648)
 
@@ -20,8 +20,6 @@ signal exit_game
 
 func _ready() -> void:
   # Make control node occupy the whole screen
-  size = window_size
-  position = Vector2.ZERO
   get_tree().paused = true
   # Set the game title labels from the project settings
   main_game_title_label.text = ProjectSettings.get_setting("application/config/name")

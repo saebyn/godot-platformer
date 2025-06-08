@@ -62,7 +62,7 @@ func _on_game_menu_start_game() -> void:
   # start the music
   music_player.play()
 
-  GameManager.reset_game()
+  GameManager.setup_game()
 
 
 func _on_game_menu_restart_game() -> void:

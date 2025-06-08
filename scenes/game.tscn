@@ -1,3 +1,184 @@
-[gd_scene load_steps=19 format=3 uid="uid://cc2n5bb6al7qg"]
+[gd_scene load_steps=18 format=3 uid="uid://cc2n5bb6al7qg"]
+
+[ext_resource type="Script" uid="uid://lajhcmop3wev" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="Script" uid="uid://xsew4ggnkidy" path="res://scripts/player.gd" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://n5pnnqr0f81t" path="res://assets/images/parallax-mountain-bg.png" id="2_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://c5flv7ajy04nu" path="res://assets/images/parallax-mountain-montain-far.png" id="3_dinhu"]
+[ext_resource type="Script" uid="uid://dw47gk4ytit0y" path="res://scripts/dead_zone.gd" id="3_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://85thijtae16x" path="res://assets/images/parallax-mountain-mountains.png" id="4_kvuet"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_p57ef"]
+[ext_resource type="Texture2D" uid="uid://d4jdn52188akp" path="res://assets/images/parallax-mountain-trees.png" id="5_trtic"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="5_u5sy4"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_gee14"]
+[ext_resource type="Texture2D" uid="uid://deskffk0dfxh1" path="res://assets/images/parallax-mountain-foreground-trees.png" id="6_ir15t"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yqjtg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(288, 47)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lbhrr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iywne"]
+radius = 13.0
+height = 46.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iywne"]
+size = Vector2(679, 254)
+
+[sub_resource type="Resource" id="Resource_0tnpc"]
+script = ExtResource("6_gee14")
+duration = 1.0
+transition = 0
+ease = 2
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_lnu2h")
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(597, 337)
+
+[node name="MountainBackground" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MountainBackground"]
+position = Vector2(-597, -337)
+scale = Vector2(4.23529, 4.05)
+texture = ExtResource("2_kvpfn")
+centered = false
+
+[node name="MountainFar" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.2, 0.2)
+repeat_size = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MountainFar"]
+position = Vector2(-21, -13)
+scale = Vector2(4.23529, 4.05)
+texture = ExtResource("3_dinhu")
+
+[node name="MountainsNear" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(1665.72, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MountainsNear"]
+position = Vector2(-11.4999, -13)
+scale = Vector2(3.07169, 4.05)
+texture = ExtResource("4_kvuet")
+
+[node name="Trees" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.7, 0.7)
+repeat_size = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Trees"]
+position = Vector2(-21, -13)
+scale = Vector2(2.11765, 4.05)
+texture = ExtResource("5_trtic")
+
+[node name="ForegroundTrees" type="Parallax2D" parent="Background"]
+repeat_size = Vector2(2237.02, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ForegroundTrees"]
+position = Vector2(-102, -13)
+scale = Vector2(4.34926, 4.05)
+texture = ExtResource("6_ir15t")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform" type="StaticBody2D" parent="Platforms"]
+position = Vector2(554, 494)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform"]
+position = Vector2(144, 23.6875)
+scale = Vector2(288, 47.375)
+texture = SubResource("PlaceholderTexture2D_yqjtg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform"]
+position = Vector2(144, 23.5)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(997, 541)
+scale = Vector2(3.16, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform2"]
+position = Vector2(144, 23.6875)
+scale = Vector2(288, 47.375)
+texture = SubResource("PlaceholderTexture2D_yqjtg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2"]
+position = Vector2(144, 23.5)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Platform3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(-432, 434)
+scale = Vector2(3.16, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform3"]
+position = Vector2(144, 23.6875)
+scale = Vector2(288, 47.375)
+texture = SubResource("PlaceholderTexture2D_yqjtg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform3"]
+position = Vector2(144, 23.5)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Platform4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(-1505, 588)
+scale = Vector2(3.16, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform4"]
+position = Vector2(144, 23.6875)
+scale = Vector2(288, 47.375)
+texture = SubResource("PlaceholderTexture2D_yqjtg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform4"]
+position = Vector2(144, 23.5)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(698, 457)
+floor_stop_on_slope = false
+script = ExtResource("1_uwrxv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(1.13249e-06, 0.5)
+scale = Vector2(26, 47)
+texture = SubResource("PlaceholderTexture2D_lbhrr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape2D_iywne")
+
+[node name="DeadZone" type="Area2D" parent="."]
+position = Vector2(711, 800)
+script = ExtResource("3_lbhrr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone"]
+shape = SubResource("RectangleShape2D_iywne")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
+visible = false
+position = Vector2(698, 457)
+enabled = false
+editor_draw_limits = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("4_p57ef")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
+top_level = true
+position = Vector2(698, 457)
+script = ExtResource("5_u5sy4")
+follow_mode = 5
+follow_target = NodePath("../Player")
+tween_resource = SubResource("Resource_0tnpc")
+tween_on_load = false
+dead_zone_width = 0.5
+draw_limits = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[connection signal="hidden" from="." to="." method="_on_hide"]
+[connection signal="body_entered" from="DeadZone" to="DeadZone" method="_on_body_entered"]
