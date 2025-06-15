@@ -22,9 +22,6 @@ signal power_state_changed(new_state: PowerState)
 signal player_died()
 
 
-var debug_h_pressed: bool = false
-var debug_p_pressed: bool = false
-
 func _physics_process(delta: float) -> void:
   # Add the gravity.
   if not is_on_floor():
@@ -33,20 +30,6 @@ func _physics_process(delta: float) -> void:
   # Handle jump.
   if Input.is_action_just_pressed("move_jump") and is_on_floor():
     velocity.y = jump_velocity
-
-  # Debug: Test power-up system with keyboard keys (for testing)
-  var h_currently_pressed = Input.is_physical_key_pressed(KEY_H)
-  var p_currently_pressed = Input.is_physical_key_pressed(KEY_P)
-  
-  if h_currently_pressed and not debug_h_pressed:  # H key just pressed - take damage (hit)
-    print("DEBUG: Taking damage, current state: ", PowerState.keys()[power_state])
-    take_damage()
-  if p_currently_pressed and not debug_p_pressed:  # P key just pressed - power up
-    print("DEBUG: Powering up, current state: ", PowerState.keys()[power_state])
-    power_up()
-    
-  debug_h_pressed = h_currently_pressed
-  debug_p_pressed = p_currently_pressed
 
   # Get the input direction and handle the movement/deceleration.
   var direction := Input.get_axis("move_left", "move_right")
@@ -84,7 +67,7 @@ func _physics_process(delta: float) -> void:
 
 # Power-up state management methods
 func take_damage() -> void:
-  """Handle taking damage - either decrease power state or die"""
+  # Handle taking damage - either decrease power state or die
   match power_state:
     PowerState.POWERED:
       set_power_state(PowerState.NORMAL)
@@ -95,7 +78,7 @@ func take_damage() -> void:
 
 
 func set_power_state(new_state: PowerState) -> void:
-  """Set the player's power state and update visuals"""
+  # Set the player's power state and update visuals
   if power_state != new_state:
     power_state = new_state
     power_state_changed.emit(new_state)
@@ -103,7 +86,7 @@ func set_power_state(new_state: PowerState) -> void:
 
 
 func power_up() -> void:
-  """Increase power state (for power-up items)"""
+  # Increase power state (for power-up items)
   match power_state:
     PowerState.SMALL:
       set_power_state(PowerState.NORMAL)
@@ -115,13 +98,13 @@ func power_up() -> void:
 
 
 func die() -> void:
-  """Handle player death"""
+  # Handle player death
   player_died.emit()
   GameManager.setup_game()
 
 
 func _update_power_visuals() -> void:
-  """Update sprite scale/color based on power state"""
+  # Update sprite scale/color based on power state
   var direction_sign = sign(sprite.scale.x) if sprite.scale.x != 0 else 1
   
   match power_state:
@@ -137,13 +120,13 @@ func _update_power_visuals() -> void:
 
 
 func _ready() -> void:
-  """Initialize the player"""
+  # Initialize the player
   _update_power_visuals()
   # Add player to the "player" group for identification
   add_to_group("player")
 
 
 func reset_player() -> void:
-  """Reset player to default state"""
+  # Reset player to default state
   set_power_state(PowerState.NORMAL)
   velocity = Vector2.ZERO

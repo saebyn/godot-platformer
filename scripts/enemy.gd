@@ -73,6 +73,6 @@ func update_raycast_directions() -> void:
       ground_check.position = Vector2(-ground_check_left_offset, ground_check_vertical_offset)
 
 func _on_body_entered(body: Node2D) -> void:
-  """Handle collision with player"""
+  # Handle collision with player
   if body.is_in_group("player") and body.has_method("take_damage"):
     body.take_damage()
