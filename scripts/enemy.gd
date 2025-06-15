@@ -12,9 +12,16 @@ extends CharacterBody2D
 
 var direction: int = 1 # 1 for right, -1 for left
 var direction_change_cooldown: float = 0.0
-var cooldown_time: float = 0.3  # Prevent direction changes for 0.3 seconds
+var cooldown_time: float = 0.3 # Prevent direction changes for 0.3 seconds
+var initial_position: Vector2  # Store starting position for respawn
 
 func _ready() -> void:
+  # Store initial position for reset
+  initial_position = global_position
+  
+  # Connect to game reset signal
+  GameManager.game_reset.connect(_on_game_reset)
+  
   # Set collision mask for raycasts to detect terrain (layer 1)
   if ground_check:
     ground_check.enabled = true
@@ -40,7 +47,7 @@ func _physics_process(delta: float) -> void:
     direction *= -1
     flip_sprite()
     update_raycast_directions()
-    direction_change_cooldown = cooldown_time  # Start cooldown
+    direction_change_cooldown = cooldown_time # Start cooldown
   
   # Move horizontally
   velocity.x = direction * speed
@@ -55,7 +62,7 @@ func should_turn_around() -> bool:
   return no_ground_ahead or hitting_wall
 
 func flip_sprite() -> void:
-  sprite.flip_h = direction < 0
+  sprite.flip_h = direction > 0
 
 func update_raycast_directions() -> void:
   # Update wall check direction based on movement direction
@@ -67,7 +74,22 @@ func update_raycast_directions() -> void:
   # Positioned at (-5, 0), so right edge is at 20 pixels, left edge at -30 pixels from center
   # Position the raycast beyond the collision edge for proper detection
   if ground_check:
-    if direction > 0:  # Moving right
+    if direction > 0: # Moving right
       ground_check.position = Vector2(ground_check_right_offset, ground_check_vertical_offset)
-    else:  # Moving left  
+    else: # Moving left
       ground_check.position = Vector2(-ground_check_left_offset, ground_check_vertical_offset)
+
+func _on_body_entered(body: Node2D) -> void:
+  # Handle collision with player
+  if body.is_in_group("player") and body.has_method("take_damage"):
+    body.take_damage()
+
+
+func _on_game_reset() -> void:
+  # Reset enemy to initial state
+  global_position = initial_position
+  velocity = Vector2.ZERO
+  direction = 1  # Reset to moving right
+  direction_change_cooldown = 0.0
+  flip_sprite()
+  update_raycast_directions()

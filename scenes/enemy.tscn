@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbwin4hno38la"]
+[gd_scene load_steps=7 format=3 uid="uid://dbwin4hno38la"]
 
 [ext_resource type="Texture2D" uid="uid://caf8a5a6l4oln" path="res://assets/platformerGraphicsDeluxe_Updated/slimeWalk1.png" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://dcp8h1llnrbr8" path="res://assets/platformerGraphicsDeluxe_Updated/slimeWalk2.png" id="2_4ra3w"]
@@ -22,6 +22,10 @@ animations = [{
 radius = 13.0
 height = 50.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_damage"]
+radius = 15.0
+height = 52.0
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("3_enemy")
 
@@ -44,3 +48,12 @@ hit_from_inside = true
 [node name="WallCheck" type="RayCast2D" parent="."]
 position = Vector2(0, -10)
 target_position = Vector2(25, 0)
+
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="DamageCollision" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-5, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_damage")
+
+[connection signal="body_entered" from="DamageArea" to="." method="_on_body_entered"]
