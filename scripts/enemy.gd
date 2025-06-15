@@ -13,8 +13,15 @@ extends CharacterBody2D
 var direction: int = 1 # 1 for right, -1 for left
 var direction_change_cooldown: float = 0.0
 var cooldown_time: float = 0.3 # Prevent direction changes for 0.3 seconds
+var initial_position: Vector2  # Store starting position for respawn
 
 func _ready() -> void:
+  # Store initial position for reset
+  initial_position = global_position
+  
+  # Connect to game reset signal
+  GameManager.game_reset.connect(_on_game_reset)
+  
   # Set collision mask for raycasts to detect terrain (layer 1)
   if ground_check:
     ground_check.enabled = true
@@ -76,3 +83,13 @@ func _on_body_entered(body: Node2D) -> void:
   # Handle collision with player
   if body.is_in_group("player") and body.has_method("take_damage"):
     body.take_damage()
+
+
+func _on_game_reset() -> void:
+  # Reset enemy to initial state
+  global_position = initial_position
+  velocity = Vector2.ZERO
+  direction = 1  # Reset to moving right
+  direction_change_cooldown = 0.0
+  flip_sprite()
+  update_raycast_directions()

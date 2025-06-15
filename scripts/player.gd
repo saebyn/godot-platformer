@@ -18,12 +18,30 @@ var power_state: PowerState = PowerState.NORMAL
 var started_jumping: bool = false
 var started_idle: bool = false
 
+# Invulnerability system
+var is_invulnerable: bool = false
+var invulnerability_duration: float = 1.5  # Seconds of invulnerability after hit
+var invulnerability_timer: float = 0.0
+var flash_frequency: float = 0.1  # How fast to flash during invulnerability
+
 # Signals for power state changes
 signal power_state_changed(new_state: PowerState)
 signal player_died()
 
 
 func _physics_process(delta: float) -> void:
+  # Handle invulnerability timer
+  if is_invulnerable:
+    invulnerability_timer -= delta
+    if invulnerability_timer <= 0:
+      is_invulnerable = false
+      sprite.modulate.a = 1.0  # Ensure sprite is fully visible
+      _update_power_visuals()  # Restore proper color
+    else:
+      # Flash effect during invulnerability
+      var flash_time = fmod(invulnerability_timer, flash_frequency * 2)
+      sprite.modulate.a = 0.3 if flash_time < flash_frequency else 1.0
+  
   # Add the gravity.
   if not is_on_floor():
     velocity += get_gravity() * delta
@@ -68,14 +86,26 @@ func _physics_process(delta: float) -> void:
 
 # Power-up state management methods
 func take_damage() -> void:
+  # Don't take damage if invulnerable
+  if is_invulnerable:
+    return
+    
   # Handle taking damage - either decrease power state or die
   match power_state:
     PowerState.POWERED:
       set_power_state(PowerState.NORMAL)
+      _start_invulnerability()
     PowerState.NORMAL:
       set_power_state(PowerState.SMALL)
+      _start_invulnerability()
     PowerState.SMALL:
       die()
+
+
+func _start_invulnerability() -> void:
+  # Start invulnerability period with flashing effect
+  is_invulnerable = true
+  invulnerability_timer = invulnerability_duration
 
 
 func set_power_state(new_state: PowerState) -> void:
@@ -132,3 +162,7 @@ func reset_player() -> void:
   # Reset player to default state
   set_power_state(PowerState.NORMAL)
   velocity = Vector2.ZERO
+  # Clear invulnerability state on reset
+  is_invulnerable = false
+  invulnerability_timer = 0.0
+  sprite.modulate.a = 1.0
