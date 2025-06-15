@@ -84,7 +84,7 @@ func update_raycast_directions() -> void:
 
 func check_player_collision() -> void:
   # Check for collision with player using slide collisions
-  for i in get_slide_collision_count():
+  for i in range(get_slide_collision_count()):
     var collision = get_slide_collision(i)
     var collider = collision.get_collider()
     
