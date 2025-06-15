@@ -37,7 +37,7 @@ rotation = -1.5708
 shape = SubResource("CapsuleShape2D_c4w8v")
 
 [node name="GroundCheck" type="RayCast2D" parent="."]
-position = Vector2(20, 25)
+position = Vector2(35, 25)
 target_position = Vector2(0, 15)
 
 [node name="WallCheck" type="RayCast2D" parent="."]

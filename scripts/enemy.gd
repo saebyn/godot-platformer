@@ -58,6 +58,12 @@ func update_raycast_directions() -> void:
   if wall_check:
     wall_check.target_position = Vector2(25 * direction, 0)
   
-  # Update ground check position to be ahead in movement direction
+  # Update ground check position to be at the edge of the collision shape
+  # Collision shape is rotated 90 degrees, so it's 50 pixels wide (height becomes width)
+  # Positioned at (-5, 0), so right edge is at 20 pixels, left edge at -30 pixels from center
+  # Position the raycast beyond the collision edge for proper detection
   if ground_check:
-    ground_check.position = Vector2(20 * direction, 25)
+    if direction > 0:  # Moving right
+      ground_check.position = Vector2(35, 25)  # Position well beyond right edge
+    else:  # Moving left  
+      ground_check.position = Vector2(-40, 25)  # Position well beyond left edge
