@@ -12,7 +12,7 @@ extends CharacterBody2D
 
 var direction: int = 1 # 1 for right, -1 for left
 var direction_change_cooldown: float = 0.0
-var cooldown_time: float = 0.3  # Prevent direction changes for 0.3 seconds
+var cooldown_time: float = 0.3 # Prevent direction changes for 0.3 seconds
 
 func _ready() -> void:
   # Set collision mask for raycasts to detect terrain (layer 1)
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
     direction *= -1
     flip_sprite()
     update_raycast_directions()
-    direction_change_cooldown = cooldown_time  # Start cooldown
+    direction_change_cooldown = cooldown_time # Start cooldown
   
   # Move horizontally
   velocity.x = direction * speed
@@ -67,7 +67,12 @@ func update_raycast_directions() -> void:
   # Positioned at (-5, 0), so right edge is at 20 pixels, left edge at -30 pixels from center
   # Position the raycast beyond the collision edge for proper detection
   if ground_check:
-    if direction > 0:  # Moving right
+    if direction > 0: # Moving right
       ground_check.position = Vector2(ground_check_right_offset, ground_check_vertical_offset)
-    else:  # Moving left  
+    else: # Moving left
       ground_check.position = Vector2(-ground_check_left_offset, ground_check_vertical_offset)
+
+func _on_body_entered(body: Node2D) -> void:
+  """Handle collision with player"""
+  if body.is_in_group("player") and body.has_method("take_damage"):
+    body.take_damage()
