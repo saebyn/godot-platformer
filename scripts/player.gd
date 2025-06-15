@@ -5,12 +5,13 @@ extends CharacterBody2D
 @export var speed: float = 300.0
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 # Power-up state system
 enum PowerState {
-  SMALL = 0,      # Takes one hit to die
-  NORMAL = 1,     # Default state, takes one hit to become small
-  POWERED = 2     # Takes one hit to become normal
+  SMALL = 0, # Takes one hit to die
+  NORMAL = 1, # Default state, takes one hit to become small
+  POWERED = 2 # Takes one hit to become normal
 }
 
 var power_state: PowerState = PowerState.NORMAL
@@ -111,19 +112,20 @@ func _update_power_visuals() -> void:
     PowerState.SMALL:
       sprite.modulate = Color.LIGHT_GRAY
       sprite.scale = Vector2(0.75 * direction_sign, 0.75)
+      collision_shape.scale = Vector2(0.75, 0.75)
     PowerState.NORMAL:
       sprite.modulate = Color.WHITE
-      sprite.scale = Vector2(1.0 * direction_sign, 1.0) 
+      sprite.scale = Vector2(1.0 * direction_sign, 1.0)
+      collision_shape.scale = Vector2(1.0, 1.0)
     PowerState.POWERED:
       sprite.modulate = Color.LIGHT_BLUE
       sprite.scale = Vector2(1.25 * direction_sign, 1.25)
+      collision_shape.scale = Vector2(1.25, 1.25)
 
 
 func _ready() -> void:
   # Initialize the player
   _update_power_visuals()
-  # Add player to the "player" group for identification
-  add_to_group("player")
 
 
 func reset_player() -> void:
