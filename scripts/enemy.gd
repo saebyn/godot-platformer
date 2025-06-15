@@ -7,6 +7,8 @@ extends CharacterBody2D
 @onready var wall_check: RayCast2D = $WallCheck
 
 var direction: int = 1 # 1 for right, -1 for left
+var direction_change_cooldown: float = 0.0
+var cooldown_time: float = 0.3  # Prevent direction changes for 0.3 seconds
 
 func _ready() -> void:
   # Set collision mask for raycasts to detect terrain (layer 1)
@@ -25,11 +27,16 @@ func _physics_process(delta: float) -> void:
   if not is_on_floor():
     velocity += get_gravity() * delta
   
-  # Check for edges and walls
-  if should_turn_around():
+  # Update cooldown timer
+  if direction_change_cooldown > 0:
+    direction_change_cooldown -= delta
+  
+  # Check for edges and walls (only if cooldown has expired)
+  if direction_change_cooldown <= 0 and should_turn_around():
     direction *= -1
     flip_sprite()
     update_raycast_directions()
+    direction_change_cooldown = cooldown_time  # Start cooldown
   
   # Move horizontally
   velocity.x = direction * speed
