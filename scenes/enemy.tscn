@@ -22,9 +22,7 @@ animations = [{
 radius = 13.0
 height = 50.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_damage"]
-radius = 15.0
-height = 52.0
+
 
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("3_enemy")
@@ -49,11 +47,4 @@ hit_from_inside = true
 position = Vector2(0, -10)
 target_position = Vector2(25, 0)
 
-[node name="DamageArea" type="Area2D" parent="."]
 
-[node name="DamageCollision" type="CollisionShape2D" parent="DamageArea"]
-position = Vector2(-5, 0)
-rotation = -1.5708
-shape = SubResource("CapsuleShape2D_damage")
-
-[connection signal="body_entered" from="DamageArea" to="." method="_on_body_entered"]
