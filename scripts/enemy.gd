@@ -55,7 +55,7 @@ func should_turn_around() -> bool:
   return no_ground_ahead or hitting_wall
 
 func flip_sprite() -> void:
-  sprite.flip_h = direction < 0
+  sprite.flip_h = direction > 0
 
 func update_raycast_directions() -> void:
   # Update wall check direction based on movement direction
