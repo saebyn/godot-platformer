@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 @export var speed: float = 100.0
+@export var wall_check_distance: float = 25.0
+@export var ground_check_right_offset: float = 35.0
+@export var ground_check_left_offset: float = 40.0
+@export var ground_check_vertical_offset: float = 25.0
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ground_check: RayCast2D = $GroundCheck
@@ -56,7 +60,7 @@ func flip_sprite() -> void:
 func update_raycast_directions() -> void:
   # Update wall check direction based on movement direction
   if wall_check:
-    wall_check.target_position = Vector2(25 * direction, 0)
+    wall_check.target_position = Vector2(wall_check_distance * direction, 0)
   
   # Update ground check position to be at the edge of the collision shape
   # Collision shape is rotated 90 degrees, so it's 50 pixels wide (height becomes width)
@@ -64,6 +68,6 @@ func update_raycast_directions() -> void:
   # Position the raycast beyond the collision edge for proper detection
   if ground_check:
     if direction > 0:  # Moving right
-      ground_check.position = Vector2(35, 25)  # Position well beyond right edge
+      ground_check.position = Vector2(ground_check_right_offset, ground_check_vertical_offset)
     else:  # Moving left  
-      ground_check.position = Vector2(-40, 25)  # Position well beyond left edge
+      ground_check.position = Vector2(-ground_check_left_offset, ground_check_vertical_offset)
