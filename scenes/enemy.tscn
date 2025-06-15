@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbwin4hno38la"]
+
+[ext_resource type="Texture2D" uid="uid://caf8a5a6l4oln" path="res://assets/platformerGraphicsDeluxe_Updated/slimeWalk1.png" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://dcp8h1llnrbr8" path="res://assets/platformerGraphicsDeluxe_Updated/slimeWalk2.png" id="2_4ra3w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5uy6h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_md0e3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_4ra3w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c4w8v"]
+radius = 14.0
+height = 50.0
+
+[node name="Enemy" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5uy6h")
+autoplay = "default"
+frame = 1
+frame_progress = 0.040645
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_c4w8v")

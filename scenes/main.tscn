@@ -10,11 +10,6 @@ script = ExtResource("1_h2yge")
 [node name="GameScene" parent="." instance=ExtResource("1_0xm2m")]
 
 [node name="GameMenu" parent="." instance=ExtResource("2_h2yge")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="MusicAudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 
