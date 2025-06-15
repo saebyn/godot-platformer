@@ -113,14 +113,14 @@ dead_zone_width = 0.5
 draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
-[node name="Enemy" parent="." instance=ExtResource("13_kvuet")]
-position = Vector2(1055, 617)
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(736, 504)
 shadow_enabled = true
 texture = ExtResource("14_trtic")
 texture_scale = 6.1
+
+[node name="Enemy" parent="." instance=ExtResource("13_kvuet")]
+position = Vector2(1106, 616)
 
 [connection signal="hidden" from="." to="." method="_on_hide"]
 [connection signal="body_entered" from="DeadZone" to="DeadZone" method="_on_body_entered"]

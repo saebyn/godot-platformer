@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://caf8a5a6l4oln" path="res://assets/platformerGraphicsDeluxe_Updated/slimeWalk1.png" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://dcp8h1llnrbr8" path="res://assets/platformerGraphicsDeluxe_Updated/slimeWalk2.png" id="2_4ra3w"]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="3_enemy"]
+[ext_resource type="Script" uid="uid://ctu6kjcghp4tm" path="res://scripts/enemy.gd" id="3_enemy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5uy6h"]
 animations = [{
@@ -19,7 +19,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c4w8v"]
-radius = 14.0
+radius = 13.0
 height = 50.0
 
 [node name="Enemy" type="CharacterBody2D"]
@@ -39,11 +39,7 @@ shape = SubResource("CapsuleShape2D_c4w8v")
 [node name="GroundCheck" type="RayCast2D" parent="."]
 position = Vector2(20, 25)
 target_position = Vector2(0, 15)
-enabled = true
-collision_mask = 1
 
 [node name="WallCheck" type="RayCast2D" parent="."]
 position = Vector2(0, -10)
 target_position = Vector2(25, 0)
-enabled = true
-collision_mask = 1
