@@ -39,6 +39,7 @@ shape = SubResource("CapsuleShape2D_c4w8v")
 [node name="GroundCheck" type="RayCast2D" parent="."]
 position = Vector2(35, 25)
 target_position = Vector2(0, 15)
+hit_from_inside = true
 
 [node name="WallCheck" type="RayCast2D" parent="."]
 position = Vector2(0, -10)
