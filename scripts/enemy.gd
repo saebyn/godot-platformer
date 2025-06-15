@@ -9,11 +9,13 @@ extends CharacterBody2D
 var direction: int = 1  # 1 for right, -1 for left
 
 func _ready() -> void:
-	# Ensure raycasts are enabled
+	# Set collision mask for raycasts to detect terrain (layer 1)
 	if ground_check:
 		ground_check.enabled = true
+		ground_check.collision_mask = 1
 	if wall_check:
 		wall_check.enabled = true
+		wall_check.collision_mask = 1
 	
 	# Update wall check direction initially
 	update_raycast_directions()
@@ -51,8 +53,8 @@ func flip_sprite() -> void:
 func update_raycast_directions() -> void:
 	# Update wall check direction based on movement direction
 	if wall_check:
-		wall_check.target_position = Vector2(20 * direction, 0)
+		wall_check.target_position = Vector2(25 * direction, 0)
 	
 	# Update ground check position to be ahead in movement direction
 	if ground_check:
-		ground_check.position = Vector2(15 * direction, 25)
+		ground_check.position = Vector2(20 * direction, 25)
