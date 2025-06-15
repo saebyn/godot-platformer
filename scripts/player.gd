@@ -1,8 +1,18 @@
 extends CharacterBody2D
 
+# Movement exports
 @export var jump_velocity: float = -800.0
 @export var slide_velocity: float = 600.0
 @export var speed: float = 300.0
+
+# Invulnerability exports
+@export var invulnerability_duration: float = 1.5  # Seconds of invulnerability after hit
+@export var flash_frequency: float = 0.1  # How fast to flash during invulnerability
+
+# Power state visual exports
+@export var small_scale: float = 0.75
+@export var normal_scale: float = 1.0
+@export var powered_scale: float = 1.25
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -20,9 +30,7 @@ var started_idle: bool = false
 
 # Invulnerability system
 var is_invulnerable: bool = false
-var invulnerability_duration: float = 1.5  # Seconds of invulnerability after hit
 var invulnerability_timer: float = 0.0
-var flash_frequency: float = 0.1  # How fast to flash during invulnerability
 
 # Signals for power state changes
 signal power_state_changed(new_state: PowerState)
@@ -63,11 +71,9 @@ func _physics_process(delta: float) -> void:
 
   # if the player is moving, flip the sprite.
   if abs(direction) > 0.1:
-    var current_scale = sprite.scale
-    sprite.scale.x = abs(current_scale.x) * sign(direction)
+    sprite.scale.x = abs(sprite.scale.x) * sign(direction)
   else:
-    var current_scale = sprite.scale
-    sprite.scale.x = abs(current_scale.x)
+    sprite.scale.x = abs(sprite.scale.x)
 
   # Update the sprite animation based on the velocity.
   if is_on_floor():
@@ -141,16 +147,16 @@ func _update_power_visuals() -> void:
   match power_state:
     PowerState.SMALL:
       sprite.modulate = Color.LIGHT_GRAY
-      sprite.scale = Vector2(0.75 * direction_sign, 0.75)
-      collision_shape.scale = Vector2(0.75, 0.75)
+      sprite.scale = Vector2(small_scale * direction_sign, small_scale)
+      collision_shape.scale = Vector2(small_scale, small_scale)
     PowerState.NORMAL:
       sprite.modulate = Color.WHITE
-      sprite.scale = Vector2(1.0 * direction_sign, 1.0)
-      collision_shape.scale = Vector2(1.0, 1.0)
+      sprite.scale = Vector2(normal_scale * direction_sign, normal_scale)
+      collision_shape.scale = Vector2(normal_scale, normal_scale)
     PowerState.POWERED:
       sprite.modulate = Color.LIGHT_BLUE
-      sprite.scale = Vector2(1.25 * direction_sign, 1.25)
-      collision_shape.scale = Vector2(1.25, 1.25)
+      sprite.scale = Vector2(powered_scale * direction_sign, powered_scale)
+      collision_shape.scale = Vector2(powered_scale, powered_scale)
 
 
 func _ready() -> void:
