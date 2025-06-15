@@ -6,55 +6,51 @@ extends CharacterBody2D
 @onready var ground_check: RayCast2D = $GroundCheck
 @onready var wall_check: RayCast2D = $WallCheck
 
-var direction: int = 1  # 1 for right, -1 for left
+var direction: int = 1 # 1 for right, -1 for left
 
 func _ready() -> void:
-	# Set collision mask for raycasts to detect terrain (layer 1)
-	if ground_check:
-		ground_check.enabled = true
-		ground_check.collision_mask = 1
-	if wall_check:
-		wall_check.enabled = true
-		wall_check.collision_mask = 1
-	
-	# Update wall check direction initially
-	update_raycast_directions()
+  # Set collision mask for raycasts to detect terrain (layer 1)
+  if ground_check:
+    ground_check.enabled = true
+    ground_check.collision_mask = 1
+  if wall_check:
+    wall_check.enabled = true
+    wall_check.collision_mask = 1
+  
+  # Update wall check direction initially
+  update_raycast_directions()
 
 func _physics_process(delta: float) -> void:
-	# Add gravity
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
-	# Check for edges and walls
-	if should_turn_around():
-		direction *= -1
-		flip_sprite()
-		update_raycast_directions()
-	
-	# Move horizontally
-	velocity.x = direction * speed
-	
-	# Update sprite animation
-	if is_on_floor():
-		sprite.play("default")
-	
-	move_and_slide()
+  # Add gravity
+  if not is_on_floor():
+    velocity += get_gravity() * delta
+  
+  # Check for edges and walls
+  if should_turn_around():
+    direction *= -1
+    flip_sprite()
+    update_raycast_directions()
+  
+  # Move horizontally
+  velocity.x = direction * speed
+  
+  move_and_slide()
 
 func should_turn_around() -> bool:
-	# Turn around if there's no ground ahead or if hitting a wall
-	var no_ground_ahead = ground_check and not ground_check.is_colliding()
-	var hitting_wall = wall_check and wall_check.is_colliding()
-	
-	return no_ground_ahead or hitting_wall
+  # Turn around if there's no ground ahead or if hitting a wall
+  var no_ground_ahead = ground_check and not ground_check.is_colliding()
+  var hitting_wall = wall_check and wall_check.is_colliding()
+  
+  return no_ground_ahead or hitting_wall
 
 func flip_sprite() -> void:
-	sprite.scale.x = -direction
+  sprite.scale.x = - direction
 
 func update_raycast_directions() -> void:
-	# Update wall check direction based on movement direction
-	if wall_check:
-		wall_check.target_position = Vector2(25 * direction, 0)
-	
-	# Update ground check position to be ahead in movement direction
-	if ground_check:
-		ground_check.position = Vector2(20 * direction, 25)
+  # Update wall check direction based on movement direction
+  if wall_check:
+    wall_check.target_position = Vector2(25 * direction, 0)
+  
+  # Update ground check position to be ahead in movement direction
+  if ground_check:
+    ground_check.position = Vector2(20 * direction, 25)
