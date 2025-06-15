@@ -53,6 +53,9 @@ func _physics_process(delta: float) -> void:
   velocity.x = direction * speed
   
   move_and_slide()
+  
+  # Check for collision with player after movement
+  check_player_collision()
 
 func should_turn_around() -> bool:
   # Turn around if there's no ground ahead or if hitting a wall
@@ -79,10 +82,15 @@ func update_raycast_directions() -> void:
     else: # Moving left
       ground_check.position = Vector2(-ground_check_left_offset, ground_check_vertical_offset)
 
-func _on_body_entered(body: Node2D) -> void:
-  # Handle collision with player
-  if body.is_in_group("player") and body.has_method("take_damage"):
-    body.take_damage()
+func check_player_collision() -> void:
+  # Check for collision with player using slide collisions
+  for i in get_slide_collision_count():
+    var collision = get_slide_collision(i)
+    var collider = collision.get_collider()
+    
+    if collider and collider.is_in_group("player") and collider.has_method("take_damage"):
+      collider.take_damage()
+      break  # Only damage once per frame
 
 
 func _on_game_reset() -> void:
