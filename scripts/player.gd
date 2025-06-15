@@ -1,15 +1,15 @@
 extends CharacterBody2D
 
-# Movement exports
+@export_group("Movement")
 @export var jump_velocity: float = -800.0
 @export var slide_velocity: float = 600.0
 @export var speed: float = 300.0
 
-# Invulnerability exports
+@export_group("Invulnerability")
 @export var invulnerability_duration: float = 1.5  # Seconds of invulnerability after hit
 @export var flash_frequency: float = 0.1  # How fast to flash during invulnerability
 
-# Power state visual exports
+@export_group("Power State Visuals")
 @export var small_scale: float = 0.75
 @export var normal_scale: float = 1.0
 @export var powered_scale: float = 1.25
