@@ -14,9 +14,12 @@ extends CharacterBody2D
 @export var normal_scale: float = 1.0
 @export var powered_scale: float = 1.25
 
+@export_group("Inventory")
+@export var has_sword: bool = false # Whether the player has a sword
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var npc_detector: RayCast2D = $NPCDetector
+@onready var target_detector: RayCast2D = $TargetDetector
 
 var npc: NPC = null # Reference to the adjacent NPC for interaction
 
@@ -65,7 +68,7 @@ func _physics_process(delta: float) -> void:
   var move_direction := Input.get_axis("move_left", "move_right")
   if move_direction:
     sprite.flip_h = move_direction < 0 # Flip sprite based on direction
-    npc_detector.target_position = Vector2(sign(move_direction) * 100, 0) # Update NPC detector direction
+    target_detector.target_position = Vector2(sign(move_direction) * 100, 0) # Update NPC detector direction
     velocity.x = move_direction * speed
   else:
     velocity.x = move_toward(velocity.x, 0, speed)
@@ -87,16 +90,14 @@ func _physics_process(delta: float) -> void:
       sprite.play("jump")
 
   # NPC interaction
-  if npc_detector.is_colliding():
-    var collider: Node2D = npc_detector.get_collider()
+  if target_detector.is_colliding():
+    var collider: Node2D = target_detector.get_collider()
     if collider is NPC:
       if collider != npc:
         if npc:
           npc.leave() # Leave previous NPC
         npc = collider
         npc.approach() # Approach new NPC
-    else:
-      print("Warning: Detected collider is not an NPC: ", collider.name)
   else:
     if npc:
       npc.leave() # Leave NPC if no longer colliding
@@ -179,6 +180,8 @@ func _ready() -> void:
   # Initialize the player
   _update_power_visuals()
 
+  GameManager.player_gets_sword.connect(get_sword)
+
 
 func reset_player() -> void:
   # Reset player to default state
@@ -191,15 +194,21 @@ func reset_player() -> void:
 
 
 func _input(event: InputEvent) -> void:
-  # Handle input events for debugging or special actions
   if event is InputEventKey and event.is_action_pressed("game_interact"):
-    # find the npc that the player is facing
-    # and trigger interaction based on that npc timeline
-    if npc_detector.is_colliding():
-      var npc: Node2D = npc_detector.get_collider()
-      if npc is NPC:
-        npc.interact()
-      else:
-        print("No interactable NPC in front.")
-    else:
-      print("No NPC detected in front.")
+    if npc:
+      npc.interact()
+    elif has_sword:
+      # TODO show sword attack animation
+      # TODO figure out how to hit low enemies, as the raycast is only horizontal
+      if target_detector.is_colliding():
+        # if the target detector is colliding with anything else, hit it
+        var collider: Node2D = target_detector.get_collider()
+        if collider.has_method("take_damage"):
+          collider.take_damage()
+        elif collider.has_method("die"):
+          collider.die()
+
+
+func get_sword() -> void:
+  # Give the player a sword
+  has_sword = true

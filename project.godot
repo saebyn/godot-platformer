@@ -34,6 +34,9 @@ directories/dch_directory={
 directories/dtl_directory={
 "timeline1": "res://Dialog/timeline1.dtl"
 }
+variables={
+"has_sword_to_give": true
+}
 
 [display]
 

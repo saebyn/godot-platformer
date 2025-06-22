@@ -1,5 +1,11 @@
 join TestNPC center
-TestNPC: Hi! I have a sword, if you want it
-- Yes, please
-	do GameManager.give_player_sword()
-- Nah, I want to die
+if {has_sword_to_give} == true:
+	TestNPC: Hi! I have a sword, if you want it
+	- Yes, please
+		do GameManager.give_player_sword()
+		set {has_sword_to_give} = false
+		TestNPC: Here you go! Go "interact" with that slime over there!
+	- Nah, I want to die
+		TestNPC: Suit yourself.
+else:
+	TestNPC: You already got my sword! Go "interact" with that slime over there, if you haven't already.

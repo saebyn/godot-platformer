@@ -78,3 +78,9 @@ func _on_game_reset() -> void:
   direction_change_cooldown = 0.0
   flip_sprite()
   update_raycast_directions()
+
+
+func die() -> void:
+  # Handle enemy death logic here
+  print("Slime died")
+  queue_free() # Remove the enemy from the scene

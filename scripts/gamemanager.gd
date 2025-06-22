@@ -5,6 +5,8 @@ var scores_path: String = "user://high_scores.cfg"
 signal game_over(player_won: bool)
 signal game_reset()
 
+signal player_gets_sword()
+
 class Score extends Resource:
   var score: int
   var initials: String
@@ -25,6 +27,4 @@ func restart_level() -> void:
 
 
 func give_player_sword() -> void:
-  # This function can be used to give the player a sword or other power-ups
-  # Implementation depends on the game logic, e.g., adding a sword node to the player
-  pass
+  player_gets_sword.emit()
