@@ -1,12 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://jro0ab63jagn"]
+[gd_scene load_steps=18 format=3 uid="uid://jro0ab63jagn"]
 
 [ext_resource type="Script" uid="uid://xsew4ggnkidy" path="res://Entities/Player/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dq5qptcucaqe0" path="res://assets/platformerGraphicsDeluxe_Updated/p1_spritesheet.png" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://do7l4qs8senfp" path="res://assets/platformerGraphicsDeluxe_Updated/p1_jump.png" id="4_qlg0r"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
-atlas = ExtResource("2_g2els")
-region = Rect2(0, 195, 67, 93)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_g2els")
@@ -59,9 +55,6 @@ region = Rect2(292, 99, 72, 97)
 [sub_resource type="SpriteFrames" id="SpriteFrames_a8ls1"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qhqgy")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dqkch")
 }],
@@ -127,8 +120,14 @@ script = ExtResource("1_3vyb7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a8ls1")
-animation = &"walk"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_iywne")
+
+[node name="NPCDetector" type="RayCast2D" parent="."]
+target_position = Vector2(100, 0)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false

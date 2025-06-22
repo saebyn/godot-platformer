@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://iv4kekbsitah"]
+
+[ext_resource type="Texture2D" uid="uid://c074yof6dba1o" path="res://assets/platformerGraphicsDeluxe_Updated/p3_spritesheet.png" id="1_toiml"]
+[ext_resource type="Script" uid="uid://daqrjejopttvk" path="res://Entities/NPC/npc.gd" id="2_d2w3i"]
+[ext_resource type="Resource" uid="uid://s3on75fwmio5" path="res://Dialog/timeline1.dtl" id="3_c5jhn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ir15t"]
+size = Vector2(66, 91.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ca42v"]
+atlas = ExtResource("1_toiml")
+region = Rect2(67, 192, 66, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rysoc"]
+atlas = ExtResource("1_toiml")
+region = Rect2(0, 192, 66, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ssvqc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ca42v")
+}, {
+"duration": 10.0,
+"texture": SubResource("AtlasTexture_rysoc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[node name="NPC" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_d2w3i")
+dialog_timeline = ExtResource("3_c5jhn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.25)
+shape = SubResource("RectangleShape2D_ir15t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ssvqc")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 1.0
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -54.0
+offset_top = -77.0
+offset_right = 52.0
+offset_bottom = -54.0
+text = "Press f to talk"
+horizontal_alignment = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cc2n5bb6al7qg"]
+[gd_scene load_steps=17 format=4 uid="uid://cc2n5bb6al7qg"]
 
 [ext_resource type="Script" uid="uid://lajhcmop3wev" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://n5pnnqr0f81t" path="res://assets/images/parallax-mountain-bg.png" id="2_kvpfn"]
@@ -14,35 +14,13 @@
 [ext_resource type="PackedScene" uid="uid://cj1v8uhtyyoqq" path="res://scenes/dead_zone.tscn" id="9_trtic"]
 [ext_resource type="PackedScene" uid="uid://dbwin4hno38la" path="res://Entities/Slime/enemy.tscn" id="13_kvuet"]
 [ext_resource type="Texture2D" uid="uid://dsfqx6aldb5n0" path="res://assets/textures/radial-gradient.png" id="14_trtic"]
-[ext_resource type="Texture2D" uid="uid://c074yof6dba1o" path="res://assets/platformerGraphicsDeluxe_Updated/p3_spritesheet.png" id="15_ir15t"]
+[ext_resource type="PackedScene" uid="uid://iv4kekbsitah" path="res://Entities/NPC/npc.tscn" id="15_ir15t"]
 
 [sub_resource type="Resource" id="Resource_0tnpc"]
 script = ExtResource("6_gee14")
 duration = 1.0
 transition = 0
 ease = 2
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ca42v"]
-atlas = ExtResource("15_ir15t")
-region = Rect2(67, 192, 66, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rysoc"]
-atlas = ExtResource("15_ir15t")
-region = Rect2(0, 192, 66, 96)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ssvqc"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ca42v")
-}, {
-"duration": 10.0,
-"texture": SubResource("AtlasTexture_rysoc")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 1.0
-}]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
@@ -143,11 +121,7 @@ position = Vector2(1106, 616)
 
 [node name="NPCs" type="Node" parent="."]
 
-[node name="TestNPC" type="AnimatedSprite2D" parent="NPCs"]
+[node name="TestNPC" parent="NPCs" instance=ExtResource("15_ir15t")]
 position = Vector2(1858, 722)
-sprite_frames = SubResource("SpriteFrames_ssvqc")
-animation = &"idle"
-autoplay = "idle"
-frame_progress = 1.0
 
 [connection signal="hidden" from="." to="." method="_on_hide"]

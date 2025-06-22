@@ -16,6 +16,9 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var npc_detector: RayCast2D = $NPCDetector
+
+var npc: NPC = null # Reference to the adjacent NPC for interaction
 
 # Power-up state system
 enum PowerState {
@@ -59,21 +62,17 @@ func _physics_process(delta: float) -> void:
     velocity.y = jump_velocity
 
   # Get the input direction and handle the movement/deceleration.
-  var direction := Input.get_axis("move_left", "move_right")
-  if direction:
-    velocity.x = direction * speed
+  var move_direction := Input.get_axis("move_left", "move_right")
+  if move_direction:
+    sprite.flip_h = move_direction < 0 # Flip sprite based on direction
+    npc_detector.target_position = Vector2(sign(move_direction) * 100, 0) # Update NPC detector direction
+    velocity.x = move_direction * speed
   else:
     velocity.x = move_toward(velocity.x, 0, speed)
 
   # If the player is holding the slide button, apply a slide velocity.
   if Input.is_action_pressed("move_slide") and is_on_floor():
     velocity.y = slide_velocity
-
-  # if the player is moving, flip the sprite.
-  if abs(direction) > 0.1:
-    sprite.scale.x = abs(sprite.scale.x) * sign(direction)
-  else:
-    sprite.scale.x = abs(sprite.scale.x)
 
   # Update the sprite animation based on the velocity.
   if is_on_floor():
@@ -86,6 +85,22 @@ func _physics_process(delta: float) -> void:
     if not started_jumping:
       started_jumping = true
       sprite.play("jump")
+
+  # NPC interaction
+  if npc_detector.is_colliding():
+    var collider: Node2D = npc_detector.get_collider()
+    if collider is NPC:
+      if collider != npc:
+        if npc:
+          npc.leave() # Leave previous NPC
+        npc = collider
+        npc.approach() # Approach new NPC
+    else:
+      print("Warning: Detected collider is not an NPC: ", collider.name)
+  else:
+    if npc:
+      npc.leave() # Leave NPC if no longer colliding
+      npc = null
 
   move_and_slide()
 
@@ -178,4 +193,13 @@ func reset_player() -> void:
 func _input(event: InputEvent) -> void:
   # Handle input events for debugging or special actions
   if event is InputEventKey and event.is_action_pressed("game_interact"):
-    Dialogic.start("timeline1")
+    # find the npc that the player is facing
+    # and trigger interaction based on that npc timeline
+    if npc_detector.is_colliding():
+      var npc: Node2D = npc_detector.get_collider()
+      if npc is NPC:
+        npc.interact()
+      else:
+        print("No interactable NPC in front.")
+    else:
+      print("No NPC detected in front.")
