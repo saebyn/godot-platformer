@@ -1,6 +1,12 @@
 extends Area2D
 
-@onready var player: Node2D = $"../Player"
+enum DamageType {
+  HIT,
+  VOID
+}
+
+@export var damage_type: DamageType = DamageType.VOID
+
 
 func _on_body_entered(body: Node2D) -> void:
   if body is CharacterBody2D:
@@ -8,13 +14,11 @@ func _on_body_entered(body: Node2D) -> void:
 
     character.velocity = Vector2.ZERO
 
-    # If the character is the player, reset the game.
-    if character.is_in_group("player"):
-      GameManager.setup_game()
-    else:
-      character.queue_free()
-
-
-func _process(_delta: float) -> void:
-  # Update the dead zone's horizontal position to match the player's position
-  position.x = player.position.x
+    if damage_type == DamageType.HIT:
+      if character.is_in_group("player"):
+        character.take_damage()
+    elif damage_type == DamageType.VOID:
+      if character.is_in_group("player"):
+        character.die()
+      else:
+        character.queue_free() # Remove non-player characters from the scene

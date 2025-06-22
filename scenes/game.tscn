@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=4 uid="uid://cc2n5bb6al7qg"]
+[gd_scene load_steps=16 format=4 uid="uid://cc2n5bb6al7qg"]
 
 [ext_resource type="Script" uid="uid://lajhcmop3wev" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://n5pnnqr0f81t" path="res://assets/images/parallax-mountain-bg.png" id="2_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://c5flv7ajy04nu" path="res://assets/images/parallax-mountain-montain-far.png" id="3_dinhu"]
-[ext_resource type="Script" uid="uid://dw47gk4ytit0y" path="res://scripts/dead_zone.gd" id="3_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://85thijtae16x" path="res://assets/images/parallax-mountain-mountains.png" id="4_kvuet"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_p57ef"]
 [ext_resource type="Texture2D" uid="uid://d4jdn52188akp" path="res://assets/images/parallax-mountain-trees.png" id="5_trtic"]
@@ -11,12 +10,10 @@
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_gee14"]
 [ext_resource type="Texture2D" uid="uid://deskffk0dfxh1" path="res://assets/images/parallax-mountain-foreground-trees.png" id="6_ir15t"]
 [ext_resource type="TileSet" uid="uid://bmxqtfyddc6vl" path="res://tilesets/tiles.tres" id="7_dinhu"]
-[ext_resource type="PackedScene" uid="uid://jro0ab63jagn" path="res://scenes/player.tscn" id="8_dinhu"]
-[ext_resource type="PackedScene" uid="uid://dbwin4hno38la" path="res://scenes/enemy.tscn" id="13_kvuet"]
+[ext_resource type="PackedScene" uid="uid://jro0ab63jagn" path="res://Entities/Player/player.tscn" id="8_dinhu"]
+[ext_resource type="PackedScene" uid="uid://cj1v8uhtyyoqq" path="res://scenes/dead_zone.tscn" id="9_trtic"]
+[ext_resource type="PackedScene" uid="uid://dbwin4hno38la" path="res://Entities/Slime/enemy.tscn" id="13_kvuet"]
 [ext_resource type="Texture2D" uid="uid://dsfqx6aldb5n0" path="res://assets/textures/radial-gradient.png" id="14_trtic"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iywne"]
-size = Vector2(679, 254)
 
 [sub_resource type="Resource" id="Resource_0tnpc"]
 script = ExtResource("6_gee14")
@@ -81,12 +78,9 @@ tile_set = ExtResource("7_dinhu")
 [node name="Player" parent="." instance=ExtResource("8_dinhu")]
 position = Vector2(641, 544)
 
-[node name="DeadZone" type="Area2D" parent="."]
+[node name="DeadZone" parent="." instance=ExtResource("9_trtic")]
 position = Vector2(641, 953)
-script = ExtResource("3_lbhrr")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone"]
-shape = SubResource("RectangleShape2D_iywne")
+scale = Vector2(49, 2.39267)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
@@ -123,4 +117,3 @@ texture_scale = 6.1
 position = Vector2(1106, 616)
 
 [connection signal="hidden" from="." to="." method="_on_hide"]
-[connection signal="body_entered" from="DeadZone" to="DeadZone" method="_on_body_entered"]

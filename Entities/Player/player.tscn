@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://jro0ab63jagn"]
 
-[ext_resource type="Script" uid="uid://xsew4ggnkidy" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://xsew4ggnkidy" path="res://Entities/Player/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dq5qptcucaqe0" path="res://assets/platformerGraphicsDeluxe_Updated/p1_spritesheet.png" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://do7l4qs8senfp" path="res://assets/platformerGraphicsDeluxe_Updated/p1_jump.png" id="4_qlg0r"]
 
@@ -121,6 +121,7 @@ radius = 37.0
 height = 90.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_mask = 5
 floor_stop_on_slope = false
 script = ExtResource("1_3vyb7")
 
