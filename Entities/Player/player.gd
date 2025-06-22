@@ -6,8 +6,8 @@ extends CharacterBody2D
 @export var speed: float = 300.0
 
 @export_group("Invulnerability")
-@export var invulnerability_duration: float = 1.5  # Seconds of invulnerability after hit
-@export var flash_frequency: float = 0.1  # How fast to flash during invulnerability
+@export var invulnerability_duration: float = 1.5 # Seconds of invulnerability after hit
+@export var flash_frequency: float = 0.1 # How fast to flash during invulnerability
 
 @export_group("Power State Visuals")
 @export var small_scale: float = 0.75
@@ -43,8 +43,8 @@ func _physics_process(delta: float) -> void:
     invulnerability_timer -= delta
     if invulnerability_timer <= 0:
       is_invulnerable = false
-      sprite.modulate.a = 1.0  # Ensure sprite is fully visible
-      _update_power_visuals()  # Restore proper color
+      sprite.modulate.a = 1.0 # Ensure sprite is fully visible
+      _update_power_visuals() # Restore proper color
     else:
       # Flash effect during invulnerability
       var flash_time = fmod(invulnerability_timer, flash_frequency * 2)
@@ -138,6 +138,7 @@ func die() -> void:
   # Handle player death
   player_died.emit()
   GameManager.setup_game()
+  Dialogic.end_timeline()
 
 
 func _update_power_visuals() -> void:
@@ -172,3 +173,9 @@ func reset_player() -> void:
   is_invulnerable = false
   invulnerability_timer = 0.0
   sprite.modulate.a = 1.0
+
+
+func _input(event: InputEvent) -> void:
+  # Handle input events for debugging or special actions
+  if event is InputEventKey and event.is_action_pressed("game_interact"):
+    Dialogic.start("timeline1")

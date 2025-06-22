@@ -1,0 +1,5 @@
+join TestNPC center
+TestNPC: Hi! I have a sword, if you want it
+- Yes, please
+	do GameManager.give_player_sword()
+- Nah, I want to die

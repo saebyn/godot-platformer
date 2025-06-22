@@ -22,3 +22,9 @@ func setup_game() -> void:
 
 func restart_level() -> void:
   game_reset.emit()
+
+
+func give_player_sword() -> void:
+  # This function can be used to give the player a sword or other power-ups
+  # Implementation depends on the game logic, e.g., adding a sword node to the player
+  pass
