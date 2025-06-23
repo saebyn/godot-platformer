@@ -25,6 +25,7 @@ const DETECTOR_DROP_OFFSET = 30.0 # Offset to drop the detector down for low ene
 @onready var target_detector: RayCast2D = $TargetDetector
 
 var npc: NPC = null # Reference to the adjacent NPC for interaction
+var is_attacking: bool = false # Track if player is currently attacking
 
 # Power-up state system
 enum PowerState {
@@ -81,16 +82,18 @@ func _physics_process(delta: float) -> void:
     velocity.y = slide_velocity
 
   # Update the sprite animation based on the velocity.
-  if is_on_floor():
-    started_jumping = false
-    if abs(velocity.x) > 0.1:
-      sprite.play("walk")
+  # Don't change animation if currently attacking
+  if not is_attacking:
+    if is_on_floor():
+      started_jumping = false
+      if abs(velocity.x) > 0.1:
+        sprite.play("walk")
+      else:
+        sprite.play("idle")
     else:
-      sprite.play("idle")
-  else:
-    if not started_jumping:
-      started_jumping = true
-      sprite.play("jump")
+      if not started_jumping:
+        started_jumping = true
+        sprite.play("jump")
 
   # NPC interaction
   if target_detector.is_colliding():
@@ -184,6 +187,9 @@ func _ready() -> void:
   _update_power_visuals()
 
   GameManager.player_gets_sword.connect(get_sword)
+  
+  # Connect to animation finished signal to handle attack animation end
+  sprite.animation_finished.connect(_on_animation_finished)
 
 
 func reset_player() -> void:
@@ -200,15 +206,37 @@ func _input(event: InputEvent) -> void:
   if event is InputEventKey and event.is_action_pressed("game_interact"):
     if npc:
       npc.interact()
-    elif has_sword:
-      # TODO show sword attack animation
-      if target_detector.is_colliding():
-        # if the target detector is colliding with anything else, hit it
-        var collider: Node2D = target_detector.get_collider()
-        if collider.has_method("take_damage"):
-          collider.take_damage()
-        elif collider.has_method("die"):
-          collider.die()
+    elif has_sword and not is_attacking:
+      _perform_sword_attack()
+
+
+func _perform_sword_attack() -> void:
+  # Start sword attack animation and logic
+  is_attacking = true
+  sprite.play("attack")
+  
+  # TODO figure out how to hit low enemies, as the raycast is only horizontal
+  if target_detector.is_colliding():
+    # if the target detector is colliding with anything else, hit it
+    var collider: Node2D = target_detector.get_collider()
+    if collider.has_method("take_damage"):
+      collider.take_damage()
+    elif collider.has_method("die"):
+      collider.die()
+
+
+func _on_animation_finished() -> void:
+  # Handle animation finished events
+  if sprite.animation == "attack":
+    is_attacking = false
+    # Return to appropriate animation based on current state
+    if is_on_floor():
+      if abs(velocity.x) > 0.1:
+        sprite.play("walk")
+      else:
+        sprite.play("idle")
+    else:
+      sprite.play("jump")
 
 
 func get_sword() -> void:
