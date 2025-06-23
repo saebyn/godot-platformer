@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
   var move_direction := Input.get_axis("move_left", "move_right")
   if move_direction:
     sprite.flip_h = move_direction < 0 # Flip sprite based on direction
-    target_detector.target_position = Vector2(sign(move_direction) * 100, 20) # Update target detector direction with slight downward angle
+    target_detector.target_position = Vector2(sign(move_direction) * 100, 30) # Update target detector direction with downward angle for low enemies
     velocity.x = move_direction * speed
   else:
     velocity.x = move_toward(velocity.x, 0, speed)
