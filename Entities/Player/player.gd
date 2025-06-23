@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
   var move_direction := Input.get_axis("move_left", "move_right")
   if move_direction:
     sprite.flip_h = move_direction < 0 # Flip sprite based on direction
-    target_detector.target_position = Vector2(sign(move_direction) * 100, 0) # Update NPC detector direction
+    target_detector.target_position = Vector2(sign(move_direction) * 100, 20) # Update target detector direction with slight downward angle
     velocity.x = move_direction * speed
   else:
     velocity.x = move_toward(velocity.x, 0, speed)
@@ -199,7 +199,6 @@ func _input(event: InputEvent) -> void:
       npc.interact()
     elif has_sword:
       # TODO show sword attack animation
-      # TODO figure out how to hit low enemies, as the raycast is only horizontal
       if target_detector.is_colliding():
         # if the target detector is colliding with anything else, hit it
         var collider: Node2D = target_detector.get_collider()
