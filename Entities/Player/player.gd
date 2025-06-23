@@ -206,6 +206,8 @@ func reset_player() -> void:
   is_invulnerable = false
   invulnerability_timer = 0.0
   sprite.modulate.a = 1.0
+  # Clear attack state on reset
+  is_attacking = false
 
 
 func _input(event: InputEvent) -> void:
