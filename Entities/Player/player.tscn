@@ -127,6 +127,6 @@ autoplay = "idle"
 shape = SubResource("CapsuleShape2D_iywne")
 
 [node name="TargetDetector" type="RayCast2D" parent="."]
-target_position = Vector2(100, 0)
+target_position = Vector2(100, 20)
 collision_mask = 10
 collide_with_areas = true
