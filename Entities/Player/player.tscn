@@ -53,8 +53,20 @@ region = Rect2(219, 99, 72, 97)
 atlas = ExtResource("2_g2els")
 region = Rect2(292, 99, 72, 97)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack"]
+atlas = ExtResource("2_g2els")
+region = Rect2(365, 99, 72, 97)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_a8ls1"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dqkch")
