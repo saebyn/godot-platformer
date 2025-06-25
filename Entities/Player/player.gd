@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+const DETECTOR_RANGE = 100.0 # Range for the target detector to find NPCs or enemies
+const DETECTOR_DROP_OFFSET = 30.0 # Offset to drop the detector down for low enemies
+
 @export_group("Movement")
 @export var jump_velocity: float = -800.0
 @export var slide_velocity: float = 600.0
@@ -68,7 +71,7 @@ func _physics_process(delta: float) -> void:
   var move_direction := Input.get_axis("move_left", "move_right")
   if move_direction:
     sprite.flip_h = move_direction < 0 # Flip sprite based on direction
-    target_detector.target_position = Vector2(sign(move_direction) * 100, 30) # Update target detector direction with downward angle for low enemies
+    target_detector.target_position = Vector2(sign(move_direction) * DETECTOR_RANGE, DETECTOR_DROP_OFFSET) # Update target detector direction with downward angle for low enemies
     velocity.x = move_direction * speed
   else:
     velocity.x = move_toward(velocity.x, 0, speed)
