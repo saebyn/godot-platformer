@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://jro0ab63jagn"]
+[gd_scene load_steps=17 format=3 uid="uid://jro0ab63jagn"]
 
 [ext_resource type="Script" uid="uid://xsew4ggnkidy" path="res://Entities/Player/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dq5qptcucaqe0" path="res://assets/platformerGraphicsDeluxe_Updated/p1_spritesheet.png" id="2_g2els"]
@@ -53,20 +53,10 @@ region = Rect2(219, 99, 72, 97)
 atlas = ExtResource("2_g2els")
 region = Rect2(292, 99, 72, 97)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_attack"]
-atlas = ExtResource("2_g2els")
-region = Rect2(0, 196, 72, 92)
+
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a8ls1"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_attack")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 8.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dqkch")
