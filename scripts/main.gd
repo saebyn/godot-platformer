@@ -15,28 +15,6 @@ func _on_game_manager_game_over(player_won: bool) -> void:
   game_menu.show()
   game_scene.hide()
 
-func _input(event: InputEvent) -> void:
-  if event.is_action_pressed("ui_cancel"):
-    # Check if the game is paused
-    if is_game_paused():
-      # If the game is paused, resume it
-      resume_game()
-    else:
-      # If the game is not paused, pause it
-      pause_game()
-
-
-func is_game_paused() -> bool:
-  # Check if the game is paused
-  return get_tree().paused
-
-
-func pause_game() -> void:
-  game_menu.pause()
-
-func resume_game() -> void:
-  game_menu.unpause()
-
 
 func _on_game_menu_exit_game() -> void:
   # Exit the game
@@ -68,4 +46,4 @@ func _on_game_menu_start_game() -> void:
 func _on_game_menu_restart_game() -> void:
   print("Restarting game")
   GameManager.restart_level()
-  resume_game()
+  game_menu.unpause()

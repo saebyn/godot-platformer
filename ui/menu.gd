@@ -18,6 +18,8 @@ signal exit_game
 @onready var credits_scene: PackedScene = preload("credits.tscn")
 @onready var high_scores_scene: PackedScene = preload("high_scores.tscn")
 
+var _is_on_pause_screen := false
+
 func _ready() -> void:
   # Make control node occupy the whole screen
   get_tree().paused = true
@@ -26,7 +28,20 @@ func _ready() -> void:
   pause_game_title_label.text = ProjectSettings.get_setting("application/config/name")
 
 
+func _unhandled_key_input(event: InputEvent) -> void:
+  # If the game is paused, check for unpause input
+  if event.is_action_pressed("ui_cancel"):
+    if _is_on_pause_screen:
+      unpause()
+    else:
+      pause()
+
 func pause() -> void:
+  # If the game is already paused, do nothing
+  if _is_on_pause_screen:
+    return
+
+  _is_on_pause_screen = true
   # Pause the game
   get_tree().paused = true
   # Show the pause menu
@@ -40,6 +55,7 @@ func pause() -> void:
 
 func unpause() -> void:
   # Unpause the game
+  _is_on_pause_screen = false
   get_tree().paused = false
   
   pause_screen.hide()
@@ -47,6 +63,7 @@ func unpause() -> void:
   hide()
 
 func _on_return_main_menu_button_pressed() -> void:
+  _is_on_pause_screen = false
   # Pause the game
   get_tree().paused = true
   # Show the start screen
@@ -58,6 +75,7 @@ func _on_return_main_menu_button_pressed() -> void:
 
 
 func _on_exit_button_pressed() -> void:
+  _is_on_pause_screen = false
   # Pause the game
   get_tree().paused = true
   # Show the start screen
@@ -66,6 +84,7 @@ func _on_exit_button_pressed() -> void:
   pause_screen.hide()
   exit_game.emit()
 
+# From the start screen
 func _on_start_button_pressed() -> void:
   # Unpause the game
   get_tree().paused = false
@@ -75,7 +94,9 @@ func _on_start_button_pressed() -> void:
 
   start_game.emit()
 
+# From the pause screen
 func _on_restart_button_pressed() -> void:
+  _is_on_pause_screen = false
   restart_game.emit()
   # Hide the pause menu
   pause_screen.hide()
