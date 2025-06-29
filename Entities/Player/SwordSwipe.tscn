@@ -1,32 +1,46 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3h7wjhxelyh8"]
+[gd_scene load_steps=9 format=3 uid="uid://b3h7wjhxelyh8"]
 
-[ext_resource type="Script" path="res://Entities/Player/SwordSwipe.gd" id="1_swipe"]
-[ext_resource type="Texture2D" uid="uid://dq5qptcucaqe0" path="res://assets/platformerGraphicsDeluxe_Updated/p1_spritesheet.png" id="2_texture"]
+[ext_resource type="Script" uid="uid://bm6bxdr7holji" path="res://Entities/Player/SwordSwipe.gd" id="1_swipe"]
+[ext_resource type="Texture2D" uid="uid://bm4bgpycbynwj" path="res://assets/textures/SwordSwipe.png" id="2_nyyds"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_swipe1"]
-atlas = ExtResource("2_texture")
-region = Rect2(365, 98, 72, 97)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gmwp"]
+atlas = ExtResource("2_nyyds")
+region = Rect2(0, 0, 64, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_swipe2"]
-atlas = ExtResource("2_texture")
-region = Rect2(0, 196, 72, 92)
+[sub_resource type="AtlasTexture" id="AtlasTexture_077nh"]
+atlas = ExtResource("2_nyyds")
+region = Rect2(64, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jr2mc"]
+atlas = ExtResource("2_nyyds")
+region = Rect2(128, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_at1sx"]
+atlas = ExtResource("2_nyyds")
+region = Rect2(192, 0, 64, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_swipe"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_swipe1")
+"texture": SubResource("AtlasTexture_6gmwp")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_swipe2")
+"texture": SubResource("AtlasTexture_077nh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jr2mc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at1sx")
 }],
 "loop": false,
 "name": &"swipe",
-"speed": 12.0
+"speed": 30.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(80, 60)
+size = Vector2(43, 108)
 
 [node name="SwordSwipe" type="Node2D"]
 script = ExtResource("1_swipe")
@@ -34,8 +48,11 @@ script = ExtResource("1_swipe")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_swipe")
 animation = &"swipe"
+frame = 3
+frame_progress = 1.0
 
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(4.5, 6)
 shape = SubResource("RectangleShape2D_attack")
