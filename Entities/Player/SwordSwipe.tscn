@@ -52,6 +52,9 @@ frame = 3
 frame_progress = 1.0
 
 [node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2(4.5, 6)

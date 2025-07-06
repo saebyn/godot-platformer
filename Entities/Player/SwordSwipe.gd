@@ -30,5 +30,11 @@ func _on_animation_finished() -> void:
     visible = false
     swipe_finished.emit()
 
-func get_collision_area() -> Area2D:
-  return collision_area
+
+func get_hits() -> Array:
+  var hits = []
+  # Check for collisions in the attack area
+  for body in collision_area.get_overlapping_bodies():
+    if body is Node2D:
+      hits.append(body)
+  return hits

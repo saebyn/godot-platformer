@@ -212,18 +212,12 @@ func _perform_sword_attack() -> void:
   # Start sword swipe effect
   var facing_right = not sprite.flip_h
   sword_swipe.play_swipe(facing_right)
-  
-  # Check for targets in sword swipe area
-  var attack_area = sword_swipe.get_collision_area()
-  var space_state = get_world_2d().direct_space_state
-  var query = PhysicsShapeQueryParameters2D.new()
-  query.shape = attack_area.get_child(0).shape
-  query.transform = attack_area.global_transform
-  query.collision_mask = target_detector.collision_mask
-  
-  var results = space_state.intersect_shape(query)
-  for result in results:
-    var collider = result["collider"]
+  # Check for hits in the direction of the swipe
+  for collider in sword_swipe.get_hits():
+    # Don't hit the player itself
+    if collider == self:
+      continue
+
     if collider.has_method("take_damage"):
       collider.take_damage()
     elif collider.has_method("die"):
