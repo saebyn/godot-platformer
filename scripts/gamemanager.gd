@@ -7,6 +7,9 @@ signal game_reset()
 
 signal player_gets_sword()
 
+signal enter_level(level: PackedScene)
+
+
 class Score extends Resource:
   var score: int
   var initials: String

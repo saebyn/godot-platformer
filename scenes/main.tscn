@@ -1,17 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1ibyecb1dmow"]
+[gd_scene load_steps=5 format=3 uid="uid://c1ibyecb1dmow"]
 
-[ext_resource type="PackedScene" uid="uid://cc2n5bb6al7qg" path="res://scenes/game.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://c8qyieqgdrge2" path="res://scripts/main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://dax0hhxr4xyjj" path="res://ui/menu.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bhypysbyi48nj" path="res://scenes/world_map.tscn" id="2_sugp2"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_jyhfs"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h2yge")
-
-[node name="GameScene" parent="." instance=ExtResource("1_0xm2m")]
+world_map = ExtResource("2_sugp2")
 
 [node name="GameMenu" parent="." instance=ExtResource("2_h2yge")]
 
 [node name="MusicAudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
+position = Vector2(447.5, 187)
+scale = Vector2(0.5, 0.5)
+process_callback = 0
+editor_draw_limits = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("4_jyhfs")
+host_layers = 3
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [connection signal="exit_game" from="GameMenu" to="." method="_on_game_menu_exit_game"]
 [connection signal="restart_game" from="GameMenu" to="." method="_on_game_menu_restart_game"]

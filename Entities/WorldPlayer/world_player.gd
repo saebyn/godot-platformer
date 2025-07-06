@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var current_direction_suffix: String = "s" # Default to south for idle animation
@@ -37,3 +36,19 @@ func _direction_suffix_from_direction(direction: Vector2) -> String:
     return "e" if direction.x > 0 else "w"
   else:
     return "s" if direction.y > 0 else "n"
+
+
+func _on_level_entrance_entered(body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
+  print("Entered level entrance from tilemaplayer: ", body.name)
+  # Get the tile from the tilemaplayer
+  if body is TileMapLayer:
+    var tilemap_layer: TileMapLayer = body
+    var coords := tilemap_layer.get_coords_for_body_rid(body_rid)
+    print("Tile coordinates: ", coords)
+    # Get the data for the tile
+    var tile_data := tilemap_layer.get_cell_tile_data(coords)
+    if tile_data and tile_data.has_custom_data("level"):
+      var level = tile_data.get_custom_data("level")
+      GameManager.enter_level.emit(level)
+    else:
+      print("No tile data found for coordinates: ", coords)
