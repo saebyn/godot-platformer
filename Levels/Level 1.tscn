@@ -1,28 +1,17 @@
-[gd_scene load_steps=16 format=4 uid="uid://cc2n5bb6al7qg"]
+[gd_scene load_steps=11 format=4 uid="uid://cc2n5bb6al7qg"]
 
-[ext_resource type="Script" uid="uid://lajhcmop3wev" path="res://scripts/game.gd" id="1_lnu2h"]
-[ext_resource type="Texture2D" uid="uid://n5pnnqr0f81t" path="res://assets/images/parallax-mountain-bg.png" id="2_kvpfn"]
-[ext_resource type="Texture2D" uid="uid://c5flv7ajy04nu" path="res://assets/images/parallax-mountain-montain-far.png" id="3_dinhu"]
-[ext_resource type="Texture2D" uid="uid://85thijtae16x" path="res://assets/images/parallax-mountain-mountains.png" id="4_kvuet"]
-[ext_resource type="Texture2D" uid="uid://d4jdn52188akp" path="res://assets/images/parallax-mountain-trees.png" id="5_trtic"]
-[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="5_u5sy4"]
-[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_gee14"]
-[ext_resource type="Texture2D" uid="uid://deskffk0dfxh1" path="res://assets/images/parallax-mountain-foreground-trees.png" id="6_ir15t"]
-[ext_resource type="TileSet" uid="uid://bmxqtfyddc6vl" path="res://tilesets/tiles.tres" id="7_dinhu"]
-[ext_resource type="PackedScene" uid="uid://jro0ab63jagn" path="res://Entities/Player/player.tscn" id="8_dinhu"]
-[ext_resource type="PackedScene" uid="uid://cj1v8uhtyyoqq" path="res://scenes/dead_zone.tscn" id="9_trtic"]
-[ext_resource type="PackedScene" uid="uid://dbwin4hno38la" path="res://Entities/Slime/enemy.tscn" id="13_kvuet"]
-[ext_resource type="Texture2D" uid="uid://dsfqx6aldb5n0" path="res://assets/textures/radial-gradient.png" id="14_trtic"]
-[ext_resource type="PackedScene" uid="uid://iv4kekbsitah" path="res://Entities/NPC/npc.tscn" id="15_ir15t"]
+[ext_resource type="Texture2D" uid="uid://n5pnnqr0f81t" path="res://assets/images/parallax-mountain-bg.png" id="1_ik8vs"]
+[ext_resource type="Texture2D" uid="uid://c5flv7ajy04nu" path="res://assets/images/parallax-mountain-montain-far.png" id="2_gn367"]
+[ext_resource type="Texture2D" uid="uid://85thijtae16x" path="res://assets/images/parallax-mountain-mountains.png" id="3_vk52j"]
+[ext_resource type="Texture2D" uid="uid://d4jdn52188akp" path="res://assets/images/parallax-mountain-trees.png" id="4_vvhgr"]
+[ext_resource type="Texture2D" uid="uid://deskffk0dfxh1" path="res://assets/images/parallax-mountain-foreground-trees.png" id="5_aom0h"]
+[ext_resource type="TileSet" uid="uid://bmxqtfyddc6vl" path="res://tilesets/tiles.tres" id="6_3tbge"]
+[ext_resource type="PackedScene" uid="uid://cj1v8uhtyyoqq" path="res://scenes/dead_zone.tscn" id="7_udk8k"]
+[ext_resource type="Texture2D" uid="uid://dsfqx6aldb5n0" path="res://assets/textures/radial-gradient.png" id="8_78cyq"]
+[ext_resource type="PackedScene" uid="uid://dbwin4hno38la" path="res://Entities/Slime/enemy.tscn" id="9_b05rt"]
+[ext_resource type="PackedScene" uid="uid://iv4kekbsitah" path="res://Entities/NPC/npc.tscn" id="10_q74n3"]
 
-[sub_resource type="Resource" id="Resource_0tnpc"]
-script = ExtResource("6_gee14")
-duration = 1.0
-transition = 0
-ease = 2
-
-[node name="Game" type="Node2D"]
-script = ExtResource("1_lnu2h")
+[node name="Level1" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
 position = Vector2(597, 337)
@@ -33,7 +22,7 @@ scroll_scale = Vector2(0, 0)
 [node name="Sprite2D" type="Sprite2D" parent="Background/MountainBackground"]
 position = Vector2(-597, -337)
 scale = Vector2(4.23529, 4.05)
-texture = ExtResource("2_kvpfn")
+texture = ExtResource("1_ik8vs")
 centered = false
 
 [node name="MountainFar" type="Parallax2D" parent="Background"]
@@ -43,7 +32,7 @@ repeat_size = Vector2(1152, 0)
 [node name="Sprite2D" type="Sprite2D" parent="Background/MountainFar"]
 position = Vector2(-21, -13)
 scale = Vector2(4.23529, 4.05)
-texture = ExtResource("3_dinhu")
+texture = ExtResource("2_gn367")
 
 [node name="MountainsNear" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.5, 0.5)
@@ -52,7 +41,7 @@ repeat_size = Vector2(1665.72, 0)
 [node name="Sprite2D" type="Sprite2D" parent="Background/MountainsNear"]
 position = Vector2(-11.4999, -13)
 scale = Vector2(3.07169, 4.05)
-texture = ExtResource("4_kvuet")
+texture = ExtResource("3_vk52j")
 
 [node name="Trees" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.7, 0.7)
@@ -61,7 +50,7 @@ repeat_size = Vector2(1152, 0)
 [node name="Sprite2D" type="Sprite2D" parent="Background/Trees"]
 position = Vector2(-21, -13)
 scale = Vector2(2.11765, 4.05)
-texture = ExtResource("5_trtic")
+texture = ExtResource("4_vvhgr")
 
 [node name="ForegroundTrees" type="Parallax2D" parent="Background"]
 repeat_size = Vector2(2237.02, 0)
@@ -69,45 +58,28 @@ repeat_size = Vector2(2237.02, 0)
 [node name="Sprite2D" type="Sprite2D" parent="Background/ForegroundTrees"]
 position = Vector2(-102, -13)
 scale = Vector2(4.34926, 4.05)
-texture = ExtResource("6_ir15t")
+texture = ExtResource("5_aom0h")
 
 [node name="TerrainTileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAACAAkAAAALAAIAAAACAAoAAAAHAAQAAAACAAsAAAAHAAQAAAADAAkAAAALAAIAAAADAAoAAAAHAAQAAAADAAsAAAAHAAQAAAAEAAkAAAALAAIAAAAEAAoAAAAHAAQAAAAEAAsAAAAHAAQAAAAFAAkAAAALAAIAAAAFAAoAAAAHAAQAAAAFAAsAAAAHAAQAAAAGAAkAAAALAAIAAAAGAAoAAAAHAAQAAAAGAAsAAAAHAAQAAAAHAAkAAAALAAIAAAAHAAoAAAAHAAQAAAAHAAsAAAAHAAQAAAAIAAkAAAALAAIAAAAIAAoAAAAHAAQAAAAIAAsAAAAHAAQAAAAJAAkAAAALAAIAAAAJAAoAAAAHAAQAAAAJAAsAAAAHAAQAAAAKAAkAAAALAAIAAAAKAAoAAAAHAAQAAAAKAAsAAAAHAAQAAAALAAoAAAAHAAQAAAALAAsAAAAHAAQAAAAOAAoAAAAHAAQAAAAOAAsAAAAHAAQAAAAPAAoAAAAHAAQAAAAPAAsAAAAHAAQAAAAQAAoAAAAHAAQAAAAQAAsAAAAHAAQAAAARAAkAAAALAAIAAAARAAoAAAAHAAQAAAARAAsAAAAHAAQAAAASAAkAAAALAAIAAAASAAoAAAAHAAQAAAASAAsAAAAHAAQAAAATAAkAAAALAAIAAAATAAoAAAAHAAQAAAATAAsAAAAHAAQAAAAUAAkAAAALAAIAAAAUAAoAAAAHAAQAAAAUAAsAAAAHAAQAAAAVAAkAAAALAAIAAAAVAAoAAAAHAAQAAAAVAAsAAAAHAAQAAAD8/wkAAAALAAIAAAD8/woAAAAHAAQAAAD8/wsAAAAHAAQAAAD9/wkAAAALAAIAAAD9/woAAAAHAAQAAAD9/wsAAAAHAAQAAAD+/wkAAAALAAIAAAD+/woAAAAHAAQAAAD+/wsAAAAHAAQAAAD//wkAAAALAAIAAAD//woAAAAHAAQAAAD//wsAAAAHAAQAAAAOAAkAAAALAAIAAAAPAAkAAAALAAIAAAAQAAkAAAALAAIAAAALAAkAAAALAAIAAAAOAAcAAAALAAUAAAASAAYAAAALAAUAAAAIAAYAAAAAAAIAAAAWAAkAAAALAAcAAAAXAAoAAAALAAcAAAAWAAoAAAALAAgAAAAXAAsAAAALAAgAAAAWAAsAAAAHAAQAAAAYAAsAAAALAAIAAAAZAAsAAAALAAIAAAAaAAsAAAALAAIAAAAbAAsAAAALAAIAAAAcAAsAAAALAAIAAAAKAAcAAAABAAMAAAA=")
-tile_set = ExtResource("7_dinhu")
+tile_set = ExtResource("6_3tbge")
 
-[node name="Player" parent="." instance=ExtResource("8_dinhu")]
-position = Vector2(641, 544)
-
-[node name="DeadZone" parent="." instance=ExtResource("9_trtic")]
+[node name="DeadZone" parent="." instance=ExtResource("7_udk8k")]
 position = Vector2(641, 953)
 scale = Vector2(49, 2.39267)
-
-[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
-top_level = true
-position = Vector2(641, 544)
-script = ExtResource("5_u5sy4")
-follow_mode = 5
-follow_target = NodePath("../Player")
-tween_resource = SubResource("Resource_0tnpc")
-host_layers = 2
-dead_zone_width = 0.5
-draw_limits = true
-metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(736, 504)
 shadow_enabled = true
-texture = ExtResource("14_trtic")
+texture = ExtResource("8_78cyq")
 texture_scale = 6.1
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="SlimeEnemy" parent="Enemies" instance=ExtResource("13_kvuet")]
+[node name="SlimeEnemy" parent="Enemies" instance=ExtResource("9_b05rt")]
 position = Vector2(1106, 616)
 
 [node name="NPCs" type="Node" parent="."]
 
-[node name="TestNPC" parent="NPCs" instance=ExtResource("15_ir15t")]
+[node name="TestNPC" parent="NPCs" instance=ExtResource("10_q74n3")]
 position = Vector2(1858, 722)
-
-[connection signal="hidden" from="." to="." method="_on_hide"]

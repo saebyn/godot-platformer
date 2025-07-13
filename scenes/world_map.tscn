@@ -239,4 +239,5 @@ dead_zone_width = 0.5
 draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
+[connection signal="tree_entered" from="." to="WorldMapPlayer" method="_on_world_map_tree_entered"]
 [connection signal="body_shape_entered" from="WorldMapPlayer/Area2D" to="WorldMapPlayer" method="_on_level_entrance_entered"]

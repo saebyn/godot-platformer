@@ -84,3 +84,4 @@ func die() -> void:
   # Handle enemy death logic here
   print("Slime died")
   queue_free() # Remove the enemy from the scene
+  GameManager.game_over.emit(true)

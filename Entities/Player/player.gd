@@ -157,8 +157,7 @@ func power_up() -> void:
 func die() -> void:
   # Handle player death
   player_died.emit()
-  GameManager.setup_game()
-  Dialogic.end_timeline()
+  GameManager.game_over.emit(false)
 
 
 func _update_power_visuals() -> void:
@@ -184,10 +183,16 @@ func _ready() -> void:
   # Initialize the player
   _update_power_visuals()
 
+  GameManager.game_reset.connect(_on_game_reset)
   GameManager.player_gets_sword.connect(get_sword)
   
   # Connect to sword swipe finished signal
   sword_swipe.swipe_finished.connect(_on_sword_swipe_finished)
+
+
+func _on_game_reset(new_position) -> void:
+  position = new_position
+  reset_player()
 
 
 func reset_player() -> void:

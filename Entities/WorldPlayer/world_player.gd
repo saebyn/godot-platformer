@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+var level_entrance_tile_data: TileData
+
 var current_direction_suffix: String = "s" # Default to south for idle animation
 
 const IDLE_MAX_SPEED = 0.1
@@ -46,9 +48,21 @@ func _on_level_entrance_entered(body_rid: RID, body: Node2D, _body_shape_index: 
     var coords := tilemap_layer.get_coords_for_body_rid(body_rid)
     print("Tile coordinates: ", coords)
     # Get the data for the tile
-    var tile_data := tilemap_layer.get_cell_tile_data(coords)
-    if tile_data and tile_data.has_custom_data("level"):
-      var level = tile_data.get_custom_data("level")
+    level_entrance_tile_data = tilemap_layer.get_cell_tile_data(coords)
+    if level_entrance_tile_data and level_entrance_tile_data.has_custom_data("level"):
+      var level = level_entrance_tile_data.get_custom_data("level")
       GameManager.enter_level.emit(level)
     else:
       print("No tile data found for coordinates: ", coords)
+
+
+func _on_world_map_tree_entered() -> void:
+  print("World map tree entered")
+  # Get the amount to move the player from the tile data
+  if level_entrance_tile_data and level_entrance_tile_data.has_custom_data("move_to_position"):
+    var move_to_position: Vector2 = level_entrance_tile_data.get_custom_data("move_to_position")
+    print("Moving player to position: ", move_to_position)
+    position += move_to_position
+    current_direction_suffix = _direction_suffix_from_direction(move_to_position)
+    sprite.play("walk_" + current_direction_suffix)
+    velocity = move_to_position.normalized() * SPEED

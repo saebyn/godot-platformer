@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1ibyecb1dmow"]
+[gd_scene load_steps=6 format=3 uid="uid://c1ibyecb1dmow"]
 
 [ext_resource type="Script" uid="uid://c8qyieqgdrge2" path="res://scripts/main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://dax0hhxr4xyjj" path="res://ui/menu.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bhypysbyi48nj" path="res://scenes/world_map.tscn" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cad2uyadmc21b" path="res://scenes/level_container.tscn" id="3_tbgi4"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_jyhfs"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h2yge")
 world_map = ExtResource("2_sugp2")
+level_container_scene = ExtResource("3_tbgi4")
 
 [node name="GameMenu" parent="." instance=ExtResource("2_h2yge")]
 
