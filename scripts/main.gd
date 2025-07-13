@@ -18,11 +18,11 @@ func _ready() -> void:
 
 
 func _on_game_manager_game_over(_player_won: bool) -> void:
+  # For now, just trigger a save here
+  GameManager.save_game()
+
   # Send the player back to the world map
   level_container.unload()
-
-  # Reset the dialogic timeline
-  Dialogic.clear()
 
   add_child(world_map_instance)
 
@@ -31,6 +31,8 @@ func _on_game_manager_enter_level(level: PackedScene) -> void:
   level_container.load(level)
   # remove the world map from the scene tree
   remove_child(world_map_instance)
+  
+  GameManager.setup_game()
 
 
 func _on_game_menu_exit_game() -> void:
@@ -64,7 +66,7 @@ func _on_game_menu_start_game() -> void:
   # add the world map to the scene tree
   add_child(world_map_instance)
 
-  GameManager.setup_game()
+  GameManager.load_game()
 
 
 func _on_game_menu_restart_game() -> void:

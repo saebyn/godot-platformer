@@ -69,7 +69,6 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/phan
 
 [global_group]
 
-ball=""
 player=""
 
 [gui]

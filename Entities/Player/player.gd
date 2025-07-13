@@ -47,6 +47,20 @@ signal power_state_changed(new_state: PowerState)
 signal player_died()
 
 
+func _init() -> void:
+  GameManager.player_load.connect(deserialize)
+
+func _ready() -> void:
+  # Initialize the player
+  _update_power_visuals()
+
+  GameManager.player_gets_sword.connect(get_sword)
+  GameManager.game_reset.connect(_on_game_reset)
+  
+  # Connect to sword swipe finished signal
+  sword_swipe.swipe_finished.connect(_on_sword_swipe_finished)
+
+
 func _physics_process(delta: float) -> void:
   # Handle invulnerability timer
   if is_invulnerable:
@@ -179,19 +193,7 @@ func _update_power_visuals() -> void:
       collision_shape.scale = Vector2(powered_scale, powered_scale)
 
 
-func _ready() -> void:
-  # Initialize the player
-  _update_power_visuals()
-
-  GameManager.game_reset.connect(_on_game_reset)
-  GameManager.player_gets_sword.connect(get_sword)
-  
-  # Connect to sword swipe finished signal
-  sword_swipe.swipe_finished.connect(_on_sword_swipe_finished)
-
-
-func _on_game_reset(new_position) -> void:
-  position = new_position
+func _on_game_reset() -> void:
   reset_player()
 
 
@@ -238,3 +240,15 @@ func _on_sword_swipe_finished() -> void:
 func get_sword() -> void:
   # Give the player a sword
   has_sword = true
+
+
+func serialize() -> Dictionary:
+  return {
+    "power_state": power_state,
+    "has_sword": has_sword
+  }
+
+func deserialize(data: Dictionary) -> void:
+  print("Deserializing player data: ", data)
+  power_state = data.get("power_state", power_state)
+  has_sword = data.get("has_sword", has_sword)
