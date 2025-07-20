@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://cc2n5bb6al7qg"]
+[gd_scene load_steps=14 format=4 uid="uid://cc2n5bb6al7qg"]
 
 [ext_resource type="Texture2D" uid="uid://n5pnnqr0f81t" path="res://assets/images/parallax-mountain-bg.png" id="1_ik8vs"]
 [ext_resource type="Texture2D" uid="uid://c5flv7ajy04nu" path="res://assets/images/parallax-mountain-montain-far.png" id="2_gn367"]
@@ -10,6 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://dsfqx6aldb5n0" path="res://assets/textures/radial-gradient.png" id="8_78cyq"]
 [ext_resource type="PackedScene" uid="uid://dbwin4hno38la" path="res://Entities/Slime/enemy.tscn" id="9_b05rt"]
 [ext_resource type="PackedScene" uid="uid://iv4kekbsitah" path="res://Entities/NPC/npc.tscn" id="10_q74n3"]
+[ext_resource type="Material" uid="uid://d363gieusr45k" path="res://materials/lens_flare_shader_material.tres" id="11_gn367"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gn367"]
+size = Vector2(1152, 648)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vk52j"]
+size = Vector2(1152, 648)
 
 [node name="Level1" type="Node2D"]
 
@@ -83,3 +90,28 @@ position = Vector2(1106, 616)
 
 [node name="TestNPC" parent="NPCs" instance=ExtResource("10_q74n3")]
 position = Vector2(1858, 722)
+
+[node name="LensFlare" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="LensFlare"]
+visible = false
+material = ExtResource("11_gn367")
+custom_minimum_size = Vector2(1152, 648)
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Sprite2D" type="Sprite2D" parent="LensFlare"]
+visible = false
+material = ExtResource("11_gn367")
+position = Vector2(576, 324)
+texture = SubResource("PlaceholderTexture2D_gn367")
+
+[node name="TextureRect" type="TextureRect" parent="LensFlare"]
+material = ExtResource("11_gn367")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_vk52j")
+expand_mode = 4

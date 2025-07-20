@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://d363gieusr45k"]
+
+[ext_resource type="Shader" uid="uid://da68r7ihwn1nh" path="res://materials/shaders/lens_flare_shader.gdshader" id="1_kvjmx"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kvjmx"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cjool"]
+noise = SubResource("FastNoiseLite_kvjmx")
+
+[resource]
+shader = ExtResource("1_kvjmx")
+shader_parameter/sun_position = Vector2(0.5, 0.35)
+shader_parameter/tint = Vector3(1.4, 1.2, 1)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_cjool")
+shader_parameter/use_debug = true
